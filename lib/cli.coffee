@@ -133,6 +133,11 @@ module.exports = CLI = (inputArgs, callback) ->
       default:  "#{__dirname}/languages"
       type:     'path'
 
+    'include-extension':
+      describe: "Include extension as part of generated filename (if you have multiple files with the same name but different extensions to generate documentation for)"
+      default:  false
+      type:     'boolean'
+
     silent:
       describe: "Output errors only."
 
@@ -203,6 +208,7 @@ module.exports = CLI = (inputArgs, callback) ->
   project.options.showdown = argv.showdown
   project.options.languages = argv.languages
   project.options.highlighter = argv.highlighter
+  project.options.includeExtension = !!argv['include-extension']
 
   # We expand the `--glob` expressions into a poor-man's set, so that we can easily remove
   # exclusions defined by `--except` before we add the result to the project's file list.

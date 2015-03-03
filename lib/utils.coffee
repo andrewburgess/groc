@@ -69,7 +69,7 @@ module.exports = Utils =
       return pair[1] if baseName.match pair[0]
 
   # Map a list of file paths to relative target paths by stripping prefixes.
-  mapFiles: (resolveRoot, files, stripPrefixes) ->
+  mapFiles: (resolveRoot, files, stripPrefixes, includeExtension) ->
     # Ensure that we're dealing with absolute paths across the board.
     files = files.map (f) -> path.resolve resolveRoot, f
 
@@ -90,10 +90,10 @@ module.exports = Utils =
         if file[0...stripPath.length] is stripPath
           file = file[stripPath.length..]
 
-      # We also strip the extension under the assumption that the consumer of
-      # this path map is going to substitute in their own.  Plus, if they care
-      # about the extension, they can get it from the keys of the map.
-      result[absPath] = if not path.extname(file) then file else file[0...-path.extname(file).length]
+      if includeExtension
+          result[absPath] = file
+      else
+          result[absPath] = if not path.extname(file) then file else file[0...-path.extname(file).length]
 
     result
 
