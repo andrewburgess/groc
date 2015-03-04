@@ -13,12 +13,13 @@ html(lang="en")
   script(type="text/javascript", src=relativeRoot + "assets/behavior.js")
 
   body(class=noCode ? "no-code": "has-code")
-    #meta
-      - if (project.githubURL)
-        .file-path
-          a(href=project.githubURL + '/blob/master/' + projectPath)= projectPath
-      - else
-        .file-path= projectPath
+    - if (!noCode)
+      #meta
+        - if (project.githubURL)
+          .file-path
+            a(href=project.githubURL + '/blob/master/' + projectPath)= projectPath
+        - else
+          .file-path= projectPath
     #document
       - for (var i in segments)
         .segment
